@@ -20,6 +20,9 @@ public:
 	int loadShader(std::string name, std::string vs_path, std::string fs_path);
 	int getShaderProgram(std::string name);
 
+	//loads a texture and returns the OpenGL texture id
+	GLuint loadTexture(std::string path);
+
 	//create a simple plane geometry
 	void createPlaneGeometry(GLuint& vao, GLuint& num_tris);
 

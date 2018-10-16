@@ -11,11 +11,10 @@ void Game::init() {
 	temp_program = graphics_system_.loadShader("phong", "data/shaders/phong.vert", "data/shaders/phong.frag");
     
 	//create a temporary texture as we don't have a material system yet
-	temp_texture = new Texture("data/assets/test.tga");
+	temp_texture = graphics_system_.loadTexture("data/assets/test.tga");
 
 	//create plane geometry for use with Mesh Component
 	graphics_system_.createPlaneGeometry(temp_vao, temp_tris);
-
 
 	//set 'background' colour of framebuffer
 	glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
@@ -79,7 +78,7 @@ void Game::update(float dt) {
 
 	//activate texture unit 0, and bind our texture there
 	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, temp_texture->texture_id);
+	glBindTexture(GL_TEXTURE_2D, temp_texture);
 
 	//tell OpenGL we want to the the vao_ container with our buffers
 	glBindVertexArray(temp_vao);

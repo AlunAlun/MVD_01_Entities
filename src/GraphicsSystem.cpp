@@ -56,6 +56,12 @@ int GraphicsSystem::getShaderProgram(std::string name) {
 	return shaders_[name]->program;
 }
 
+//loads a texture and returns its id
+GLuint GraphicsSystem::loadTexture(std::string path) {
+	Texture t("data/assets/test.tga");
+	return t.texture_id;
+}
+
 //creates a standard plane geometry
 void GraphicsSystem::createPlaneGeometry(GLuint& vao, GLuint& num_tris) {
 

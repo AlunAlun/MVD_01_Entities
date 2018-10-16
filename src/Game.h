@@ -13,7 +13,7 @@ public:
 	//TODO: remove these or move them to graphics system!
 	Camera* temp_camera;
 	GLuint temp_program;
-	Texture* temp_texture;
+	GLuint temp_texture;
 	GLuint temp_vao;
 	GLuint temp_tris;
 
