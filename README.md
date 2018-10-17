@@ -14,7 +14,6 @@
  - create entity for plane - use function defined in ECS
  - create mesh component for plane - use function in ECS
  - assign mesh component vao and num tris from created plane geometry
- - delete temp_camera (move it GraphicsSystem)
 
  - change position of plane using transform component:
    ECS.getComponentFromEntity<Transform>(entity_id).translate(0.0f, 1.0f, 3.0f);
