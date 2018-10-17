@@ -26,7 +26,8 @@ void GraphicsSystem::update(float dt) {
 	// - clear buffers
 	// - set shader program
 	// render all mesh components in ECS
-	// suggest you abstract drawing code to renderMeshComponent function
+	// basic - keep rendering code here
+	// advanced: abstract code to renderMeshComponent function below
 
 
 
@@ -37,6 +38,11 @@ void GraphicsSystem::update(float dt) {
 void GraphicsSystem::renderMeshComponent_(Mesh& comp) {
 	//TODO:
 	// - drawing code for a single mesh component
+
+	// hint to get model matrix from a transform:
+	// Transform& transform = ECS.getComponentFromEntity<Transform>(comp.owner);
+	// to get world matrix using scene hierarchy: 
+	// transform.getGlobalMatrix(ECS.getAllComponents<Transform>());
 
 
 }

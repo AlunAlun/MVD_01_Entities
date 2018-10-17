@@ -11,7 +11,6 @@ public:
 	void update(float dt);
 
 	//TODO: remove these or move them to graphics system!
-	Camera* temp_camera;
 	GLuint temp_program;
 	GLuint temp_texture;
 	GLuint temp_vao;

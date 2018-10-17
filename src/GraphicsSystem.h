@@ -2,7 +2,6 @@
 #include "includes.h"
 #include "Shader.h"
 #include "Components.h"
-#include "Camera.h"
 #include "Texture.h"
 #include <vector>
 #include <unordered_map>

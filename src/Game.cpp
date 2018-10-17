@@ -19,20 +19,28 @@ void Game::init() {
 	//set 'background' colour of framebuffer
 	glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
 
-	//temporary code to create a camera
-	temp_camera = new Camera();
-	temp_camera->lookAt(vec3(0.0f, 0.0f, 3.0f), vec3(0.0f, 0.0f, 0.0f), vec3(0.0f, 1.0f, 0.0f));
-	temp_camera->setPerspective(60.0f*DEG2RAD, 1, 0.01f, 100.0f);
 
+	//******* TODO *******//
 
-	//******* CREATE ENTITIES AND ADD COMPONENTS *******//
+	//TODO in Components.h
+	// - fill in MeshComponent properties
 
-	//TODO:
-	// - init Graphics System (with camera and GL setup code
-	// - create entity for plane
-	// - fill in MeshComponent properties in Components.h
+	//TODO in GraphicsSystem.cpp
+	// - move all GL and rendering code from Game 
+
+	//TODO in Game.cpp
+	// - call init and update functions of GraphicSystem
+	// - create entity for plane - use function defined in ECS
 	// - create mesh component for plane - use function in ECS
-	// - assign mesh component vao and num tris
+	// - assign mesh component vao and num tris from created plane geometry
+	// - delete temp_camera (move it GraphicsSystem)
+
+	// - change position of plane using transform component:
+	//   ECS.getComponentFromEntity<Transform>(entity_id).translate(0.0f, 1.0f, 3.0f);
+
+	// - Advanced: create a second entity and new Mesh Component
+	//   which uses the same geometry
+	// - draw both entities in different positions
 	
 }
 
@@ -41,11 +49,19 @@ void Game::update(float dt) {
 
 	//TODO
 	// - update graphics system
-	// - move drawing code to graphics system
+	// - move this drawing code to graphics system
 
 
 	//tell OpenGL which shader to use
 	glUseProgram(temp_program);
+
+	lm::vec3 cam_position(0.0f, 0.0f, 3.0f);
+	lm::vec3 cam_target(0.0f, 0.0f, 0.0f);
+	lm::vec3 cam_up(0.0f, 1.0f, 0.0f);
+	lm::mat4 view_matrix, projection_matrix, view_projection;
+	view_matrix.lookAt(cam_position, cam_target, cam_up);
+	projection_matrix.perspective(60.0f*DEG2RAD, 1, 0.01f, 100.0f);
+	view_projection = projection_matrix * view_matrix;
 
 	//model matrix
 	lm::mat4 model_matrix;
@@ -56,7 +72,7 @@ void Game::update(float dt) {
 	normal_matrix.transpose();
 
 	//Model view projection matrix
-	lm::mat4 mvp_matrix = temp_camera->ViewProjection() * model_matrix;
+	lm::mat4 mvp_matrix = view_projection * model_matrix;
 
 	//ask shader for a reference to the uniforms 
 	GLint u_mvp = glGetUniformLocation(temp_program, "u_mvp");
@@ -72,7 +88,7 @@ void Game::update(float dt) {
 	if (u_model != -1) glUniformMatrix4fv(u_model, 1, GL_FALSE, model_matrix.m);
 	if (u_normal_matrix != -1) glUniformMatrix4fv(u_normal_matrix, 1, GL_FALSE, normal_matrix.m);
 	if (u_light_pos != -1) glUniform3f(u_light_pos, 1000.0f, 0.0f, 1000.0f); //... 3f - is 3 floats
-	if (u_cam_pos != -1) glUniform3fv(u_cam_pos, 1, temp_camera->eye().value_); // ...3fv - is array of 3 floats
+	if (u_cam_pos != -1) glUniform3fv(u_cam_pos, 1, cam_position.value_); // ...3fv - is array of 3 floats
 	if (u_texture_diffuse != -1) glUniform1i(u_texture_diffuse, 0); // ...1i - is integer
 	if (u_glossiness != -1) glUniform1f(u_glossiness, 80.0f); //...1f - for float
 
